@@ -25,7 +25,7 @@ const Overlay = () => {
           className="w-full h-full object-cover" 
         />
         {/* This creates a subtle dark layer so your name is easy to read */}
-        <div className="absolute inset-0 bg-black/40" />
+       
       </div>
 
       {/* Hero Section: Your Name & Title */}
