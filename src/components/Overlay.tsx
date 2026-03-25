@@ -20,7 +20,7 @@ const Overlay = () => {
       {/* BACKGROUND IMAGE - This is the "Hero" photo of you */}
       <div className="fixed inset-0 z-[-1]">
         <img 
-          src="/-PORTFOLIO--1/Assets/sequence/frame_00_delay-0.066s.png"
+          src="/-PORTFOLIO--1/Assets/sequence/frame_00_delay-0.066s"
           alt="Deepika Premjani"
           className="w-full h-full object-cover" 
         />
