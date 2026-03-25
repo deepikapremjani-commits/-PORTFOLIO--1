@@ -6,7 +6,6 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 const Overlay = () => {
   const { scrollYProgress } = useScroll();
 
-  // Animations for text fading in and out as you scroll
   const opacity1 = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const opacity2 = useTransform(scrollYProgress, [0.2, 0.3, 0.4, 0.5], [0, 1, 1, 0]);
   const opacity3 = useTransform(scrollYProgress, [0.5, 0.6, 0.7, 0.8], [0, 1, 1, 0]);
@@ -16,16 +15,14 @@ const Overlay = () => {
   const y3 = useTransform(scrollYProgress, [0.5, 0.7], [50, -50]);
 
   return (
-    <div className="relative min-h-[300vh]">
-      {/* BACKGROUND IMAGE - This is the "Hero" photo of you */}
-      <div className="fixed inset-0 z-[-1]">
+    <div className="relative">
+      {/* 100% BRIGHTNESS BACKGROUND */}
+      <div className="fixed inset-0 z-[-1] bg-white">
         <img 
-         src="https://raw.githubusercontent.com/deepikapremjani-commits/-PORTFOLIO--1/refs/heads/main/public/Assets/sequence/frame_00_delay-0.066s.png"
+          src="https://raw.githubusercontent.com/deepikapremjani-commits/-PORTFOLIO--1/main/public/Assets/sequence/frame_00_delay-0.066s.png" 
           alt="Deepika Premjani"
-          className="w-full h-full object-cover" 
+          className="w-full h-full object-cover opacity-100" 
         />
-        {/* This creates a subtle dark layer so your name is easy to read */}
-       
       </div>
 
       {/* Hero Section: Your Name & Title */}
@@ -33,13 +30,13 @@ const Overlay = () => {
         style={{ opacity: opacity1, y: y1 }}
         className="fixed top-0 left-0 w-full h-screen flex flex-col items-center justify-center px-8 text-center"
       >
-        <h1 className="text-6xl md:text-8xl font-bold text-white tracking-tighter">
+        <h1 className="text-6xl md:text-8xl font-bold text-white drop-shadow-2xl">
           Deepika Premjani
         </h1>
-        <p className="text-xl md:text-2xl text-white/80 mt-4 tracking-widest uppercase">
+        <p className="text-xl md:text-2xl text-white mt-4 tracking-widest uppercase font-semibold">
           Interior Designer
         </p>
-        <p className="text-lg italic text-white/60 mt-2">
+        <p className="text-lg italic text-white/90 mt-2">
           Transforming visions into vivid realities.
         </p>
       </motion.div>
