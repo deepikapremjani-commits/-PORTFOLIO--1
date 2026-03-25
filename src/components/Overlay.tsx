@@ -6,118 +6,63 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 const Overlay = () => {
   const { scrollYProgress } = useScroll();
 
-  // Text 1 (0% scroll) fades out smoothly over the first 30% of scroll
-  const opacity1 = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
-  const y1 = useTransform(scrollYProgress, [0, 0.3], [0, -100]);
-
-  // Text 2 (30% scroll)
+  // Animations for text fading in and out as you scroll
+  const opacity1 = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const opacity2 = useTransform(scrollYProgress, [0.2, 0.3, 0.4, 0.5], [0, 1, 1, 0]);
-  const y2 = useTransform(scrollYProgress, [0.2, 0.4], [50, -50]);
-
-  // Text 3 (60% scroll)
   const opacity3 = useTransform(scrollYProgress, [0.5, 0.6, 0.7, 0.8], [0, 1, 1, 0]);
+
+  const y1 = useTransform(scrollYProgress, [0, 0.2], [0, -50]);
+  const y2 = useTransform(scrollYProgress, [0.2, 0.4], [50, -50]);
   const y3 = useTransform(scrollYProgress, [0.5, 0.7], [50, -50]);
 
-  const tagline = "Transforming visions into vivid realities.";
-
-  // Part A: Name and Title
-  const partAVariants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
-    }
-  };
-
-  // Part B: Tagline Stagger
-  const sentenceVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.6, // Start slightly after Part A fades in
-        staggerChildren: 0.05
-      }
-    }
-  };
-
-  const charVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
-    }
-  };
-
   return (
-    <div className="absolute top-0 left-0 w-full h-[500vh] pointer-events-none z-10 font-sans">
-
-      {/* Section 1 */}
-      <motion.div
-        style={{ opacity: opacity1, y: y1 }}
-        className="fixed top-0 left-0 w-full h-screen flex items-center justify-start px-12 md:px-24 pointer-events-none"
-      >
-        <div className="text-left flex flex-col items-start justify-center space-y-4 md:space-y-6 text-white max-w-4xl">
-          <motion.div
-            variants={partAVariants}
-            initial="hidden"
-            animate="visible"
-            className="drop-shadow-2xl"
-          >
-            <h1 className="text-5xl md:text-7xl font-bold mb-2">
-              Deepika Premjani
-            </h1>
-            <p className="text-2xl md:text-4xl font-semibold uppercase tracking-widest text-zinc-300">
-              Interior Designer
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={sentenceVariants}
-            initial="hidden"
-            animate="visible"
-            className="text-2xl md:text-3xl font-medium italic drop-shadow-2xl max-w-4xl leading-tight"
-          >
-            {tagline.split("").map((char, index) => (
-              <motion.span key={index} variants={charVariants} className="inline-block">
-                {char === " " ? "\u00A0" : char}
-              </motion.span>
-            ))}
-          </motion.div>
-        </div>
-     </motion.div>
-
-      {/* Background Image Layer */}
-      <div className="fixed inset-0 -z-10">
+    <div className="relative min-h-[300vh]">
+      {/* BACKGROUND IMAGE - This is the "Hero" photo of you */}
+      <div className="fixed inset-0 z-[-1]">
         <img 
           src="/-PORTFOLIO--1/Assets/Hero/Deepika.jpg" 
           alt="Deepika Premjani"
-          className="w-full h-full object-cover opacity-40" 
+          className="w-full h-full object-cover" 
         />
-        <div className="absolute inset-0 bg-black/50" />
+        {/* This creates a subtle dark layer so your name is easy to read */}
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
-      {/* Section 2 */}
+      {/* Hero Section: Your Name & Title */}
+      <motion.div
+        style={{ opacity: opacity1, y: y1 }}
+        className="fixed top-0 left-0 w-full h-screen flex flex-col items-center justify-center px-8 text-center"
+      >
+        <h1 className="text-6xl md:text-8xl font-bold text-white tracking-tighter">
+          Deepika Premjani
+        </h1>
+        <p className="text-xl md:text-2xl text-white/80 mt-4 tracking-widest uppercase">
+          Interior Designer
+        </p>
+        <p className="text-lg italic text-white/60 mt-2">
+          Transforming visions into vivid realities.
+        </p>
+      </motion.div>
+
+      {/* Section 2: Scrolling Text */}
       <motion.div
         style={{ opacity: opacity2, y: y2 }}
         className="fixed top-0 left-0 w-full h-screen flex items-center justify-start px-8 md:px-24 pointer-events-none"
       >
         <h2 className="text-5xl md:text-7xl font-thin text-white leading-tight">
           I DESIGN <br />
-          <span className="text-gray-400 font-medium">spaces that belong..</span>
+          <span className="text-gray-300 font-medium">spaces that belong..</span>
         </h2>
       </motion.div>
 
-      {/* Section 3 */}
+      {/* Section 3: Scrolling Text */}
       <motion.div
         style={{ opacity: opacity3, y: y3 }}
         className="fixed top-0 left-0 w-full h-screen flex items-center justify-end px-8 md:px-24 pointer-events-none"
       >
-        <h2 className="text-4xl md:text-6xl font-bold max-w-2xl text-right text-white leading-tight drop-shadow-lg">
+        <h2 className="text-4xl md:text-6xl font-bold max-w-2xl text-right text-white leading-tight">
           Bridging design <br />
-          <span className="text-gray-400 font-light italic">and engineering.</span>
+          <span className="text-gray-300 font-light italic">and engineering.</span>
         </h2>
       </motion.div>
     </div>
