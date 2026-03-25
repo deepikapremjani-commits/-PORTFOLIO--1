@@ -87,7 +87,17 @@ const Overlay = () => {
             ))}
           </motion.div>
         </div>
-      </motion.div>
+     </motion.div>
+
+      {/* Background Image Layer */}
+      <div className="fixed inset-0 -z-10">
+        <img 
+          src="/-PORTFOLIO--1/Assets/Hero/Deepika.jpg" 
+          alt="Deepika Premjani"
+          className="w-full h-full object-cover opacity-40" 
+        />
+        <div className="absolute inset-0 bg-black/50" />
+      </div>
 
       {/* Section 2 */}
       <motion.div
@@ -110,7 +120,6 @@ const Overlay = () => {
           <span className="text-gray-400 font-light italic">and engineering.</span>
         </h2>
       </motion.div>
-
     </div>
   );
 };
