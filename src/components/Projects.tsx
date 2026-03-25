@@ -32,17 +32,17 @@ const Projects = () => {
       ...commercialImages.map((img) => ({
         id: `comm_${img}`,
         category: 'Commercial',
-        src: `/Assets/Projects/COMMERCIAL PROJECTS/${img}`,
+       src: /-PORTFOLIO--1/Assets/Projects/COMMERCIAL PROJECTS/${img},
       })),
       ...residentialImages.map((img) => ({
         id: `res_${img}`,
         category: 'Residential',
-        src: `/Assets/Projects/RESIDENTIAL PROJECTS/${img}`,
+       src: /-PORTFOLIO--1/Assets/Projects/RESIDENTIAL PROJECTS/${img},
       })),
       ...restaurantImages.map((img) => ({
         id: `rest_${img}`,
         category: 'Restaurant',
-        src: `/Assets/Projects/RESTAURANT PROJECTS/${img}`,
+        src: /-PORTFOLIO--1/Assets/Projects/RESTAURANT PROJECTS/${img},
       })),
     ];
   }, []);
