@@ -6,34 +6,34 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 const Overlay = () => {
   const { scrollYProgress } = useScroll();
 
-  // --- ANIMATION LOGIC (The 21 photos) ---
-  // This turns your scroll into a frame number from 0 to 20
+  // --- 1. IMAGE ANIMATION (0% to 40% of scroll) ---
   const frameIndex = useTransform(scrollYProgress, [0, 0.4], [0, 20]);
 
   const frames = useMemo(() => {
     return Array.from({ length: 21 }, (_, i) => {
-      // This automatically creates the name: frame_00_delay-0.066s.png, etc.
       const num = i.toString().padStart(2, '0');
-      return `/-PORTFOLIO--1/Assets/sequence/frame_${num}_delay-0.066s.png`;
+      // This is the "Master Link" that forces GitHub to show the images
+      return `https://raw.githubusercontent.com/deepikapremjani-commits/-PORTFOLIO--1/main/public/Assets/sequence/frame_${num}_delay-0.066s.png`;
     });
   }, []);
 
-  // --- TEXT ANIMATIONS (Based on your VS Code settings) ---
-  const opacity1 = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
-  const y1 = useTransform(scrollYProgress, [0, 0.3], [0, -100]);
+  // --- 2. TEXT TIMING (No more overlapping) ---
+  // Text A: Fades out completely by 20% scroll
+  const opacityA = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const yA = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
 
-  const opacity2 = useTransform(scrollYProgress, [0.2, 0.3, 0.4, 0.5], [0, 1, 1, 0]);
-  const y2 = useTransform(scrollYProgress, [0.2, 0.4], [50, -50]);
+  // Text B: Starts at 25%, fades out by 50%
+  const opacityB = useTransform(scrollYProgress, [0.25, 0.35, 0.45, 0.55], [0, 1, 1, 0]);
+  const yB = useTransform(scrollYProgress, [0.25, 0.45], [50, -50]);
 
-  const opacity3 = useTransform(scrollYProgress, [0.5, 0.6, 0.7, 0.8], [0, 1, 1, 0]);
-  const y3 = useTransform(scrollYProgress, [0.5, 0.7], [50, -50]);
-
-  const tagline = "Transforming visions into vivid realities.";
+  // Text C: Starts at 60%, fades out by 85%
+  const opacityC = useTransform(scrollYProgress, [0.6, 0.7, 0.8, 0.9], [0, 1, 1, 0]);
+  const yC = useTransform(scrollYProgress, [0.6, 0.8], [50, -50]);
 
   return (
-    <div className="relative min-h-[600vh]">
-      {/* BACKGROUND ANIMATION LAYER */}
-      <div className="fixed inset-0 z-[-1] bg-black">
+    <div className="relative min-h-[800vh] bg-black">
+      {/* BACKGROUND IMAGES */}
+      <div className="fixed inset-0 z-[-1]">
         {frames.map((src, i) => (
           <motion.img
             key={src}
@@ -48,9 +48,9 @@ const Overlay = () => {
         ))}
       </div>
 
-      {/* Part A: Your Name and Title (Left Aligned) */}
+      {/* PART A: Deepika Premjani */}
       <motion.div
-        style={{ opacity: opacity1, y: y1 }}
+        style={{ opacity: opacityA, y: yA }}
         className="fixed top-0 left-0 w-full h-screen flex flex-col items-start justify-center px-12 md:px-24 text-left"
       >
         <h1 className="text-6xl md:text-8xl font-bold text-white tracking-tight drop-shadow-2xl">
@@ -59,15 +59,12 @@ const Overlay = () => {
         <p className="text-xl md:text-2xl text-gray-300 mt-2 tracking-[0.2em] uppercase font-medium">
           Interior Designer
         </p>
-        <p className="text-lg italic text-white/90 mt-6 font-light">
-          {tagline}
-        </p>
       </motion.div>
 
-      {/* Part B: Scrolling Section 2 */}
+      {/* PART B: I Design */}
       <motion.div
-        style={{ opacity: opacity2, y: y2 }}
-        className="fixed top-0 left-0 w-full h-screen flex items-center justify-start px-12 md:px-24 pointer-events-none"
+        style={{ opacity: opacityB, y: yB }}
+        className="fixed top-0 left-0 w-full h-screen flex flex-col items-start justify-center px-12 md:px-24 text-left pointer-events-none"
       >
         <h2 className="text-5xl md:text-7xl font-thin text-white leading-tight">
           I DESIGN <br />
@@ -75,12 +72,12 @@ const Overlay = () => {
         </h2>
       </motion.div>
 
-      {/* Part C: Scrolling Section 3 */}
+      {/* PART C: Bridging */}
       <motion.div
-        style={{ opacity: opacity3, y: y3 }}
-        className="fixed top-0 left-0 w-full h-screen flex items-center justify-end px-12 md:px-24 pointer-events-none"
+        style={{ opacity: opacityC, y: yC }}
+        className="fixed top-0 left-0 w-full h-screen flex flex-col items-end justify-center px-12 md:px-24 text-right pointer-events-none"
       >
-        <h2 className="text-4xl md:text-6xl font-bold max-w-2xl text-right text-white leading-tight">
+        <h2 className="text-4xl md:text-6xl font-bold max-w-2xl text-white leading-tight">
           Bridging design <br />
           <span className="text-gray-400 font-light italic">and engineering.</span>
         </h2>
