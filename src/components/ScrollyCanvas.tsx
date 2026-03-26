@@ -13,7 +13,7 @@ const ScrollyCanvas: React.FC<ScrollyCanvasProps> = ({ numFrames }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -29,13 +29,12 @@ const ScrollyCanvas: React.FC<ScrollyCanvasProps> = ({ numFrames }) => {
       for (let i = 0; i < numFrames; i++) {
         const frameNumber = i.toString().padStart(2, '0');
         const img = new Image();
-        img.src = `/Assets/sequence/frame_${frameNumber}_delay-0.066s.png`;
-        
+        img.src = `/sequence/frame_${frameNumber}_delay-0.066s.png`;
         await new Promise((resolve) => {
           img.onload = resolve;
           img.onerror = resolve; // Continue even if one frame fails
         });
-        
+
         loadedImages.push(img);
       }
       setImages(loadedImages);
@@ -46,7 +45,7 @@ const ScrollyCanvas: React.FC<ScrollyCanvasProps> = ({ numFrames }) => {
 
   useEffect(() => {
     if (images.length === 0 || !canvasRef.current) return;
-    
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d', { alpha: false }); // Optimize by disabling alpha if matching bg
     if (!ctx) return;
@@ -57,17 +56,17 @@ const ScrollyCanvas: React.FC<ScrollyCanvasProps> = ({ numFrames }) => {
       const currentFrame = Math.round(frameIndex.get());
       if (images[currentFrame] && images[currentFrame].complete) {
         const img = images[currentFrame];
-        
+
         // Handle High DPI displays
         const width = window.innerWidth;
         const height = window.innerHeight;
         canvas.width = width * window.devicePixelRatio;
         canvas.height = height * window.devicePixelRatio;
-        
+
         // Background color
         ctx.fillStyle = '#121212';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
+
         ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
         canvas.style.width = `${width}px`;
         canvas.style.height = `${height}px`;
@@ -95,7 +94,7 @@ const ScrollyCanvas: React.FC<ScrollyCanvasProps> = ({ numFrames }) => {
 
     // Use framer motion's onChange to trigger renders dynamically along scroll
     const unsubscribe = frameIndex.on("change", render);
-    
+
     // Initial render
     render();
 
