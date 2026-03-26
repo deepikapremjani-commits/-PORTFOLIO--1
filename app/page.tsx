@@ -18,7 +18,7 @@ export default function Home() {
 
       {/* Software Skills Grid */}
       <SoftwareSkills />
-      
+
       {/* Experience Section */}
       <Experience />
 
