@@ -6,34 +6,28 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 const Overlay = () => {
   const { scrollYProgress } = useScroll();
 
-  // 1. THE IMAGE ANIMATION (Using "Expert" Direct Web Links)
-  // This turns your scroll into a frame number (0 to 20)
+  // 1. ANIMATION LOGIC (0 to 20 frames)
   const frameIndex = useTransform(scrollYProgress, [0, 0.45], [0, 20]);
 
   const frames = useMemo(() => {
     return Array.from({ length: 21 }, (_, i) => {
       const num = i.toString().padStart(2, '0');
-      // This is a "Raw" link that forces GitHub to show the image no matter what
-      return `https://raw.githubusercontent.com/deepikapremjani-commits/-PORTFOLIO--1/main/public/frame_${num}_delay-0.066s.png`;
+      // THE FIX: Looking directly in the root of your public folder
+      return `./frame_${num}_delay-0.066s.png`;
     });
   }, []);
 
-  // 2. THE TEXT TIMING (Clean fade-outs to stop overlapping)
-  // Section A: Fades out completely by 20% scroll
+  // 2. TEXT TIMING (Fixed Overlapping)
   const opacityA = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const yA = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
-
-  // Section B: Only appears between 30% and 55% scroll
   const opacityB = useTransform(scrollYProgress, [0.3, 0.4, 0.5, 0.6], [0, 1, 1, 0]);
   const yB = useTransform(scrollYProgress, [0.3, 0.45], [50, -50]);
-
-  // Section C: Only appears after 65% scroll
   const opacityC = useTransform(scrollYProgress, [0.65, 0.75, 0.85, 0.95], [0, 1, 1, 0]);
   const yC = useTransform(scrollYProgress, [0.65, 0.8], [50, -50]);
 
   return (
     <div className="relative min-h-[800vh] bg-black">
-      {/* BACKGROUND IMAGE LAYER */}
+      {/* THE IMAGE LAYER (Scroll Sequence) */}
       <div className="fixed inset-0 z-0">
         {frames.map((src, i) => (
           <motion.img
@@ -49,9 +43,9 @@ const Overlay = () => {
         ))}
       </div>
 
-      {/* TEXT LAYER */}
+      {/* THE TEXT LAYER */}
       <div className="relative z-10 pointer-events-none">
-        {/* Section 1: Hero (Left Aligned) */}
+        {/* Section 1: Hero */}
         <motion.div 
           style={{ opacity: opacityA, y: yA }} 
           className="fixed inset-0 flex flex-col items-start justify-center px-12 md:px-24 text-left"
