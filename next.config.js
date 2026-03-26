@@ -1,6 +1,2 @@
-const nextConfig = {
-  basePath: "/your-repo-name",
-  assetPrefix: "/your-repo-name/",
-};
-
+const nextConfig = {};
 module.exports = nextConfig;
