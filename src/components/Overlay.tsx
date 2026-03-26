@@ -13,7 +13,7 @@ const Overlay = () => {
     return Array.from({ length: 21 }, (_, i) => {
       const num = i.toString().padStart(2, '0');
       // THE FIX: Looking directly in the root of your public folder
-      return `./frame_${num}_delay-0.066s.png`;
+      return `/sequence/frame_${num}_delay-0.066s.png`;
     });
   }, []);
 
@@ -34,7 +34,7 @@ const Overlay = () => {
             key={src}
             src={src}
             style={{
-              display: useTransform(frameIndex, (latest) => 
+              display: useTransform(frameIndex, (latest) =>
                 Math.round(latest) === i ? 'block' : 'none'
               ),
             }}
@@ -46,8 +46,8 @@ const Overlay = () => {
       {/* THE TEXT LAYER */}
       <div className="relative z-10 pointer-events-none">
         {/* Section 1: Hero */}
-        <motion.div 
-          style={{ opacity: opacityA, y: yA }} 
+        <motion.div
+          style={{ opacity: opacityA, y: yA }}
           className="fixed inset-0 flex flex-col items-start justify-center px-12 md:px-24 text-left"
         >
           <h1 className="text-6xl md:text-8xl font-bold text-white drop-shadow-2xl">
@@ -59,8 +59,8 @@ const Overlay = () => {
         </motion.div>
 
         {/* Section 2: I Design */}
-        <motion.div 
-          style={{ opacity: opacityB, y: yB }} 
+        <motion.div
+          style={{ opacity: opacityB, y: yB }}
           className="fixed inset-0 flex flex-col items-start justify-center px-12 md:px-24 text-left"
         >
           <h2 className="text-5xl md:text-7xl font-thin text-white leading-tight">
@@ -70,8 +70,8 @@ const Overlay = () => {
         </motion.div>
 
         {/* Section 3: Engineering */}
-        <motion.div 
-          style={{ opacity: opacityC, y: yC }} 
+        <motion.div
+          style={{ opacity: opacityC, y: yC }}
           className="fixed inset-0 flex flex-col items-end justify-center px-12 md:px-24 text-right"
         >
           <h2 className="text-4xl md:text-6xl font-bold text-white max-w-2xl leading-tight">
