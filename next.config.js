@@ -1,7 +1,6 @@
 const nextConfig = {
-  images: {
-    unoptimized: true,
-  },
-}
+  basePath: "/your-repo-name",
+  assetPrefix: "/your-repo-name/",
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
