@@ -12,13 +12,13 @@ const Overlay = () => {
 
   const frames = useMemo(() => {
     return Array.from({ length: 21 }, (_, i) => {
-      // This matches the EXACT name and location from your public folder upload
+      // This looks for the EXACT names in your public folder
       const num = i.toString().padStart(2, '0');
-      return `/-PORTFOLIO--1/frame_${num}_delay-0.066s.png`;
+      return `/frame_${num}_delay-0.066s.png`;
     });
   }, []);
 
-  // 2. TEXT TIMING (Zero Overlap - Professional Layout)
+  // 2. TEXT TIMING (Zero Overlap)
   const opacityA = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
   const yA = useTransform(scrollYProgress, [0, 0.15], [0, -100]);
 
@@ -48,7 +48,7 @@ const Overlay = () => {
 
       {/* THE TEXT LAYER */}
       <div className="relative z-10">
-        {/* Section 1: Hero (Left Aligned like your photo) */}
+        {/* Section 1: Hero */}
         <motion.div 
           style={{ opacity: opacityA, y: yA }} 
           className="fixed inset-0 flex flex-col items-start justify-center px-12 md:px-24 text-left"
