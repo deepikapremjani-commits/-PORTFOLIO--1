@@ -4,10 +4,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const skills = [
-  { id: 1, name: 'AutoCAD', image: '/-PORTFOLIO--1/Assets/SoftwareSkills/autocad.png' },
-  { id: 2, name: 'SketchUp', image: '/-PORTFOLIO--1/Assets/SoftwareSkills/sketchup.png' },
-  { id: 3, name: 'V-Ray', image: '/-PORTFOLIO--1/Assets/SoftwareSkills/vray.png' },
-  { id: 4, name: 'Enscape', image: '/-PORTFOLIO--1/Assets/SoftwareSkills/enscape.png' },
+  { id: 1, name: 'AutoCAD', image: '/Assets/SoftwareSkills/autocad.png' },
+  { id: 2, name: 'SketchUp', image: '/Assets/SoftwareSkills/sketchup.png' },
+  { id: 3, name: 'V-Ray', image: '/Assets/SoftwareSkills/vray.png' },
+  { id: 4, name: 'Enscape', image: '/Assets/SoftwareSkills/enscape.png' },
 ];
 
 const SoftwareSkills = () => {
