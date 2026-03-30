@@ -35,7 +35,7 @@ const portfolioFolders = [
     id: 'restaurant',
     name: 'Restaurant',
     cover: '/Assets/Projects/RESTAURANT PROJECTS/1.png',
-    images: ['1', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '14', '15', '16', '17', '18', '19', '20']
+    images: ['1','3','4','5','6','7','8','9','10','11','12','14','15','16','17','18','19','20']
       .map(n => `/Assets/Projects/RESTAURANT PROJECTS/${n}.png`),
     count: 18,
     color: '#c67e7e'
@@ -114,7 +114,7 @@ const Projects = () => {
                           className="w-10 h-10 rounded-full flex items-center justify-center border border-white/20 group-hover:border-white/60 transition-all"
                         >
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M5 12h14M12 5l7 7-7 7" />
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
                           </svg>
                         </motion.div>
                       </div>
@@ -139,7 +139,7 @@ const Projects = () => {
                 className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-10 group"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M19 12H5M12 19l-7-7 7-7" />
+                  <path d="M19 12H5M12 19l-7-7 7-7"/>
                 </svg>
                 <span>Back to folders</span>
               </motion.button>
@@ -188,7 +188,7 @@ const Projects = () => {
               onClick={() => setSelectedImage(null)}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
               </svg>
             </motion.button>
             <motion.img
