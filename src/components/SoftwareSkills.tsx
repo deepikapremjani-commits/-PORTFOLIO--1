@@ -32,8 +32,8 @@ const SoftwareSkills = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: skill.id * 0.1 }}
               className="group relative bg-[#1c1c1c] p-8 rounded-2xl border border-white/5 hover:border-white/20 transition-all duration-300 flex flex-col items-center"
-            >
-              <div className="w-24 h-24 mb-6 relative">
+            >w-24 h-24 mb-6 relative bg-white rounded-2xl p-3 flex items-center justify-center
+              <div className="">
                 <img
                   src={skill.image}
                   alt={skill.name}
