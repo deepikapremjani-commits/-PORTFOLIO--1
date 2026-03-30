@@ -43,7 +43,8 @@ const SoftwareSkills = () => {
 
               {/* Icon box */}
               <motion.div
-                className="w-36 h-36 mb-8 bg-white rounded-2xl flex items-center justify-center p-4 shadow-lg"
+                className="mb-8 bg-white rounded-2xl flex items-center justify-center p-4 shadow-lg"
+                style={{ width: '144px', height: '144px' }
                 whileHover={{ rotate: [0, -5, 5, 0], transition: { duration: 0.4 } }}
               >
                 <img
