@@ -49,3 +49,5 @@ const SoftwareSkills = () => {
     </section>
   );
 };
+
+export default SoftwareSkills;
