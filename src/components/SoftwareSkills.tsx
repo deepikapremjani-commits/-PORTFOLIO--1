@@ -37,7 +37,7 @@ const SoftwareSkills = () => {
                 <img
                   src={skill.image}
                   alt={skill.name}
-                  className="w-full h-full object-contain transition-all duration-500"
+                  className="w-full h-full object-contain transition-all duration-500 p-2"
                 />
               </div>
               <h3 className="text-lg font-medium text-white/70 group-hover:text-white transition-colors">
