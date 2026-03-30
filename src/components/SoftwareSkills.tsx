@@ -32,12 +32,12 @@ const SoftwareSkills = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: skill.id * 0.1 }}
               className="group relative bg-[#1c1c1c] p-8 rounded-2xl border border-white/5 hover:border-white/20 transition-all duration-300 flex flex-col items-center"
-            >w-24 h-24 mb-6 relative bg-white rounded-2xl p-3 flex items-center justify-center
-              <div className="">
+            >
+              <div className="w-24 h-24 mb-6 bg-white rounded-2xl flex items-center justify-center p-3">
                 <img
                   src={skill.image}
                   alt={skill.name}
-                  className="w-full h-full object-contain transition-all duration-500 p-2"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <h3 className="text-lg font-medium text-white/70 group-hover:text-white transition-colors">
@@ -50,5 +50,3 @@ const SoftwareSkills = () => {
     </section>
   );
 };
-
-export default SoftwareSkills;
