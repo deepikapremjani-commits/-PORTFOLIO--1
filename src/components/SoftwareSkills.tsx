@@ -22,7 +22,6 @@ const SoftwareSkills = () => {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tighter text-center">Software Proficiency</h2>
         </motion.div>
-
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {skills.map((skill) => (
             <motion.div
