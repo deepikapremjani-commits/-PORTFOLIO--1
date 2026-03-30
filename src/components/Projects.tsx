@@ -1,196 +1,203 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const categories = ['All', 'Commercial', 'Residential', 'Restaurant'];
-
-const commercialImages = [
-  '_DSC1146.png', '_DSC1191.png', '_DSC1204.png', '_DSC1230.png', '_DSC1316.png',
-  '_DSC1341.png', '_DSC1401.png', '_DSC1420.png', '_DSC1438.png', '_DSC1473.png',
-  '_DSC1529.png', '_DSC1611.png', '_DSC1617.png', '_DSC1656.png', '_DSC1664.png',
-  '_DSC1737.png', '_DSC1757.png', '_DSC1782.png', '_DSC1790.png', '_DSC1799.png',
-  '_DSC1827.png', '_DSC1873.png', '_DSC6318.png', '_DSC6372.png', '_DSC6381.png',
-  '_DSC6399.png', '_DSC6434.png', '_DSC6671.png', '_DSC6689.png', '_DSC6707.png',
-  '_DSC6716.png', '_DSC6725.png'
+const portfolioFolders = [
+  {
+    id: 'commercial',
+    name: 'Commercial',
+    cover: '/Assets/Projects/COMMERCIAL PROJECTS/_DSC1146.png',
+    images: [
+      '_DSC1146.png', '_DSC1191.png', '_DSC1204.png', '_DSC1230.png',
+      '_DSC1316.png', '_DSC1341.png', '_DSC1401.png', '_DSC1420.png',
+      '_DSC1438.png', '_DSC1473.png', '_DSC1529.png', '_DSC1611.png',
+      '_DSC1617.png', '_DSC1656.png', '_DSC1664.png', '_DSC1737.png',
+      '_DSC1757.png', '_DSC1782.png', '_DSC1790.png', '_DSC1799.png',
+      '_DSC1827.png', '_DSC1873.png', '_DSC6318.png', '_DSC6372.png',
+      '_DSC6381.png', '_DSC6399.png', '_DSC6434.png', '_DSC6671.png',
+      '_DSC6689.png', '_DSC6707.png', '_DSC6716.png', '_DSC6725.png'
+    ].map(img => `/Assets/Projects/COMMERCIAL PROJECTS/${img}`),
+    count: 32,
+    color: '#c6a47e'
+  },
+  {
+    id: 'residential',
+    name: 'Residential',
+    cover: '/Assets/Projects/RESIDENTIAL PROJECTS/frame_21_delay-0.066s.png',
+    images: Array.from({ length: 46 }, (_, i) => i + 21)
+      .filter(n => n !== 47)
+      .map(n => `/Assets/Projects/RESIDENTIAL PROJECTS/frame_${n}_delay-0.066s.png`),
+    count: 46,
+    color: '#7e9cc6'
+  },
+  {
+    id: 'restaurant',
+    name: 'Restaurant',
+    cover: '/Assets/Projects/RESTAURANT PROJECTS/1.png',
+    images: ['1', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '14', '15', '16', '17', '18', '19', '20']
+      .map(n => `/Assets/Projects/RESTAURANT PROJECTS/${n}.png`),
+    count: 18,
+    color: '#c67e7e'
+  }
 ];
-const residentialImages = ['frame_21_delay-0.066s.png', 'frame_22_delay-0.066s.png', 'frame_23_delay-0.066s.png', 'frame_24_delay-0.066s.png', 'frame_25_delay-0.066s.png', 'frame_26_delay-0.066s.png', 'frame_27_delay-0.066s.png', 'frame_28_delay-0.066s.png', 'frame_29_delay-0.066s.png', 'frame_30_delay-0.066s.png', 'frame_31_delay-0.066s.png', 'frame_32_delay-0.066s.png', 'frame_33_delay-0.066s.png', 'frame_34_delay-0.066s.png', 'frame_35_delay-0.066s.png', 'frame_36_delay-0.066s.png', 'frame_37_delay-0.066s.png', 'frame_38_delay-0.066s.png', 'frame_39_delay-0.066s.png', 'frame_40_delay-0.066s.png', 'frame_41_delay-0.066s.png', 'frame_42_delay-0.066s.png', 'frame_43_delay-0.066s.png', 'frame_44_delay-0.066s.png', 'frame_45_delay-0.066s.png', 'frame_46_delay-0.066s.png', 'frame_48_delay-0.066s.png', 'frame_49_delay-0.066s.png', 'frame_50_delay-0.066s.png', 'frame_51_delay-0.066s.png', 'frame_52_delay-0.066s.png', 'frame_53_delay-0.066s.png', 'frame_54_delay-0.066s.png', 'frame_55_delay-0.066s.png', 'frame_56_delay-0.066s.png', 'frame_57_delay-0.066s.png', 'frame_58_delay-0.066s.png', 'frame_59_delay-0.066s.png', 'frame_60_delay-0.066s.png', 'frame_61_delay-0.066s.png', 'frame_62_delay-0.066s.png', 'frame_63_delay-0.066s.png', 'frame_64_delay-0.066s.png', 'frame_65_delay-0.066s.png', 'frame_66_delay-0.066s.png'];
-const restaurantImages = ['1.png', '10.png', '11.png', '12.png', '14.png', '15.png', '16.png', '17.png', '18.png', '19.png', '20.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png'];
-
-type Project = {
-  id: string;
-  category: string;
-  src: string;
-};
 
 const Projects = () => {
-  const [activeTab, setActiveTab] = useState('All');
-  const [selectedImage, setSelectedImage] = useState<Project | null>(null);
+  const [openFolder, setOpenFolder] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const allProjects = useMemo(() => {
-    return [
-      ...commercialImages.map((img) => ({
-        id: `comm_${img}`,
-        category: 'Commercial',
-        src: `/Assets/Projects/COMMERCIAL PROJECTS/${img}`,
-      })),
-      ...residentialImages.map((img) => ({
-        id: `res_${img}`,
-        category: 'Residential',
-        src: `/Assets/Projects/RESIDENTIAL PROJECTS/${img}`,
-      })),
-      ...restaurantImages.map((img) => ({
-        id: `rest_${img}`,
-        category: 'Restaurant',
-        src: `/Assets/Projects/RESTAURANT PROJECTS/${img}`,
-      })),
-    ];
-  }, []);
-
-  const displayedProjects = useMemo(() => {
-    if (activeTab === 'All') return allProjects;
-    return allProjects.filter((p) => p.category === activeTab);
-  }, [activeTab, allProjects]);
-
-  // Framer Motion variants for staggered entry
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.95 },
-    show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
-    exit: { opacity: 0, scale: 0.95, transition: { duration: 0.3 } }
-  };
+  const activeFolder = portfolioFolders.find(f => f.id === openFolder);
 
   return (
     <section className="relative z-20 bg-zinc-950 py-32 px-6 md:px-12 text-white">
       <div className="max-w-7xl mx-auto">
-        <motion.div
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="text-4xl md:text-5xl font-bold mb-16 tracking-[0.2em] text-center"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 tracking-[0.2em] text-center">PORTFOLIO</h2>
-        </motion.div>
+          PORTFOLIO
+        </motion.h2>
 
-        {/* Filter Bar */}
-        <div className="flex flex-wrap justify-center gap-4 mb-16">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveTab(cat)}
-              className={`px-6 py-2 rounded-full border transition-all duration-300 outline-none ${activeTab === cat
-                  ? 'bg-white text-zinc-950 border-white shadow-[0_0_20px_rgba(255,255,255,0.2)] font-medium'
-                  : 'bg-transparent text-gray-400 border-white/20 hover:border-white/60 hover:text-white'
-                }`}
+        {/* Folder View */}
+        <AnimatePresence mode="wait">
+          {!openFolder ? (
+            <motion.div
+              key="folders"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-8"
             >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Dynamic Staggered Grid Layout */}
-        <motion.div
-          layout
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8"
-        >
-          <AnimatePresence mode="popLayout">
-            {displayedProjects.map((project) => (
-              <motion.div
-                key={project.id}
-                layoutId={`card-${project.id}`}
-                variants={itemVariants}
-                initial="hidden"
-                animate="show"
-                exit="exit"
-                onClick={() => setSelectedImage(project)}
-                className="group relative aspect-[4/5] cursor-pointer overflow-hidden rounded-3xl bg-white/5 border border-white/10"
-              >
-                <motion.img
-                  layoutId={`img-${project.id}`}
-                  src={project.src}
-                  alt={`${project.category} Project`}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
-                />
-
-                {/* Subtle overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-zinc-950/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
-                  <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    <span className="text-[#c6a47e] font-sans tracking-widest text-xs font-semibold uppercase block mb-1 drop-shadow-md">
-                      {project.category}
-                    </span>
-                    <h3 className="text-xl font-medium text-white drop-shadow-md">View details</h3>
+              {portfolioFolders.map((folder, index) => (
+                <motion.div
+                  key={folder.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.15 }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  onClick={() => setOpenFolder(folder.id)}
+                  className="cursor-pointer group"
+                >
+                  {/* Folder Shape */}
+                  <div className="relative">
+                    {/* Folder Tab */}
+                    <div
+                      className="absolute -top-4 left-4 w-24 h-6 rounded-t-lg"
+                      style={{ backgroundColor: folder.color }}
+                    />
+                    {/* Folder Body */}
+                    <div
+                      className="relative rounded-b-2xl rounded-tr-2xl overflow-hidden border border-white/10 group-hover:border-white/30 transition-all duration-300"
+                      style={{ backgroundColor: '#1c1c1c' }}
+                    >
+                      {/* Cover Image */}
+                      <div className="aspect-[4/3] overflow-hidden">
+                        <img
+                          src={folder.cover}
+                          alt={folder.name}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
+                          loading="lazy"
+                        />
+                      </div>
+                      {/* Folder Info */}
+                      <div className="p-6 flex items-center justify-between">
+                        <div>
+                          <h3 className="text-xl font-bold text-white">{folder.name}</h3>
+                          <p className="text-sm text-gray-400 mt-1">{folder.count} photos</p>
+                        </div>
+                        <motion.div
+                          whileHover={{ x: 4 }}
+                          className="w-10 h-10 rounded-full flex items-center justify-center border border-white/20 group-hover:border-white/60 transition-all"
+                        >
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                          </svg>
+                        </motion.div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            /* Images Inside Folder */
+            <motion.div
+              key="images"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              {/* Back Button */}
+              <motion.button
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                onClick={() => setOpenFolder(null)}
+                className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-10 group"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                <span>Back to folders</span>
+              </motion.button>
+
+              <h3 className="text-2xl font-bold mb-8" style={{ color: activeFolder?.color }}>
+                {activeFolder?.name} Projects
+              </h3>
+
+              {/* Image Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {activeFolder?.images.map((src, i) => (
+                  <motion.div
+                    key={src}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: i * 0.05 }}
+                    onClick={() => setSelectedImage(src)}
+                    className="aspect-[4/3] cursor-pointer overflow-hidden rounded-2xl bg-white/5 border border-white/10 hover:border-white/30 transition-all duration-300 group"
+                  >
+                    <img
+                      src={src}
+                      alt={`${activeFolder.name} ${i + 1}`}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Interactive Lightbox Modal */}
+      {/* Lightbox */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 backdrop-blur-md bg-zinc-950/80"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-md bg-black/80"
             onClick={() => setSelectedImage(null)}
           >
-            {/* Close button */}
             <motion.button
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0, transition: { delay: 0.3 } }}
-              exit={{ opacity: 0, y: -20 }}
-              className="absolute top-6 right-6 sm:top-8 sm:right-8 text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-colors backdrop-blur-lg"
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedImage(null);
-              }}
+              className="absolute top-6 right-6 text-white bg-white/10 hover:bg-white/20 rounded-full p-3"
+              onClick={() => setSelectedImage(null)}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </motion.button>
-
-            {/* Image Container */}
-            <motion.div
-              layoutId={`card-${selectedImage.id}`}
-              className="relative w-full max-w-5xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl flex items-center justify-center pointer-events-none"
-            >
-              <motion.img
-                layoutId={`img-${selectedImage.id}`}
-                src={selectedImage.src}
-                alt={`${selectedImage.category} Project Full Size`}
-                className="w-auto h-auto max-w-full max-h-[90vh] object-contain rounded-3xl"
-              />
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { delay: 0.4 } }}
-                exit={{ opacity: 0 }}
-                className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-zinc-950/90 to-transparent"
-              >
-                <span className="text-[#c6a47e] font-sans tracking-widest text-sm font-semibold uppercase">
-                  {selectedImage.category} Design
-                </span>
-              </motion.div>
-            </motion.div>
+            <motion.img
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              src={selectedImage}
+              className="max-w-5xl max-h-[90vh] w-auto h-auto rounded-2xl object-contain"
+              onClick={e => e.stopPropagation()}
+            />
           </motion.div>
         )}
       </AnimatePresence>
