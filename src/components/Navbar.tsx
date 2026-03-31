@@ -26,7 +26,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-500" style={navStyle}>
+        <nav className="fixed top-0 left-0 right-0 z-50" style={{ background: 'transparent' }}>
             <div className="max-w-7xl mx-auto px-6 md:px-12 py-5 flex items-center justify-between">
                 <a href="#home" className="text-white font-bold text-lg tracking-widest uppercase">
                     Deepika <span style={{ color: '#c6a47e' }}>Premjani</span>
