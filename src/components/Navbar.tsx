@@ -20,8 +20,8 @@ const Navbar = () => {
     ];
 
     const navStyle = {
-        background: scrolled ? 'rgba(18,18,18,0.95)' : 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%)',
-        backdropFilter: 'blur(10px)',
+        background: scrolled ? 'rgba(18,18,18,0.85)' : 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%)',
+        backdropFilter: 'blur(4px)',
         borderBottom: scrolled ? '1px solid rgba(198,164,126,0.2)' : 'none',
     };
 
