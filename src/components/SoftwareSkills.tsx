@@ -35,8 +35,8 @@ export default function SoftwareSkills() {
               className="group relative bg-[#1c1c1c] p-10 rounded-3xl border border-white/5 hover:border-white/30 transition-all duration-500 flex flex-col items-center cursor-pointer"
             >
               <div
-                className="mb-8 bg-white rounded-2xl flex items-center justify-center p-4 shadow-lg"
-                style={{ width: '144px', height: '144px' }}
+                className="mb-4 md:mb-8 bg-white rounded-xl md:rounded-2xl flex items-center justify-center p-3 md:p-4 shadow-lg"
+                style={{ width: '100px', height: '100px' }}
               >
                 <img
                   src={skill.image}
