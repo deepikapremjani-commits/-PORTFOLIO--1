@@ -9,27 +9,24 @@ import Contact from '../src/components/Contact';
 
 export default function Home() {
   return (
-    <main className="bg-[#121212] min-h-screen font-sans selection:bg-[#c6a47e] selection:text-white">
-      {/* Scrollytelling Hero Area */}
-      <section className="relative w-full">
+    <main className="bg-[#121212] min-h-screen font-sans">
+      <section id="home" className="relative w-full">
         <ScrollyCanvas numFrames={21} />
         <Overlay />
       </section>
-
-      {/* Software Skills Grid */}
-      <SoftwareSkills />
-
-      {/* Experience Section */}
-      <Experience />
-
-      {/* Education Section */}
-      <Education />
-
-      {/* Dynamic Project Gallery */}
-      <Projects />
-
-      {/* Contact Section */}
-      <Contact />
+      <section id="skills">
+        <SoftwareSkills />
+      </section>
+      <section id="experience">
+        <Experience />
+        <Education />
+      </section>
+      <section id="portfolio">
+        <Projects />
+      </section>
+      <section id="contact">
+        <Contact />
+      </section>
     </main>
   );
 }
