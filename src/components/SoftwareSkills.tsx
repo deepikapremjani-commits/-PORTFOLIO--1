@@ -32,11 +32,11 @@ export default function SoftwareSkills() {
               transition={{ duration: 0.6, delay: index * 0.15 }}
               whileHover={{ y: -12, scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
-              className="group relative bg-[#1c1c1c] p-10 rounded-3xl border border-white/5 hover:border-white/30 transition-all duration-500 flex flex-col items-center cursor-pointer"
+              className="group relative bg-[#1c1c1c] p-4 md:p-10 rounded-2xl md:rounded-3xl border border-white/5 hover:border-white/30 transition-all duration-500 flex flex-col items-center cursor-pointer"
             >
               <div
                 className="mb-4 md:mb-8 bg-white rounded-xl md:rounded-2xl flex items-center justify-center p-3 md:p-4 shadow-lg"
-                style={{ width: '100px', height: '100px' }}
+                style={{ width: '80px', height: '80px' }}
               >
                 <img
                   src={skill.image}
