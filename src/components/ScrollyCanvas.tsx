@@ -92,7 +92,7 @@ const ScrollyCanvas: React.FC<ScrollyCanvasProps> = ({ numFrames }) => {
   }, [images, frameIndex]);
 
   // On mobile — make scroll section much shorter
-  const scrollHeight = isMobile ? 'h-[80vh]' : 'h-[200vh]';
+  const scrollHeight = isMobile ? 'h-[60vh]' : 'h-[200vh]';
 
   return (
     <div ref={containerRef} className={`${scrollHeight} relative w-full bg-[#121212]`}>
