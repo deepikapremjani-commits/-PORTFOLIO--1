@@ -6,28 +6,39 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 const Overlay = () => {
   const { scrollYProgress } = useScroll();
 
-  // 1. ANIMATION LOGIC (0 to 20 frames)
   const frameIndex = useTransform(scrollYProgress, [0, 0.45], [0, 20]);
 
   const frames = useMemo(() => {
     return Array.from({ length: 21 }, (_, i) => {
       const num = i.toString().padStart(2, '0');
-      // THE FIX: Looking directly in the root of your public folder
       return `/sequence/frame_${num}_delay-0.066s.png`;
     });
   }, []);
 
-  // 2. TEXT TIMING (Fixed Overlapping)
+  // Section 1 scroll exit
   const opacityA = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const yA = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
+
+  // Section 2
   const opacityB = useTransform(scrollYProgress, [0.3, 0.4, 0.5, 0.6], [0, 1, 1, 0]);
   const yB = useTransform(scrollYProgress, [0.3, 0.45], [50, -50]);
+
+  // Section 3
   const opacityC = useTransform(scrollYProgress, [0.65, 0.75, 0.85, 0.95], [0, 1, 1, 0]);
   const yC = useTransform(scrollYProgress, [0.65, 0.8], [50, -50]);
 
+  // Name split reveal — top half goes up, bottom half goes down, then meet at center
+  const topHalfY = useTransform(scrollYProgress, [0, 0.001], [-60, 0]);
+  const bottomHalfY = useTransform(scrollYProgress, [0, 0.001], [60, 0]);
+  const nameOpacity = useTransform(scrollYProgress, [0, 0.001, 0.15, 0.2], [0, 1, 1, 0]);
+
+  // Interior Designer shimmer — appears after name settles
+  const subtitleOpacity = useTransform(scrollYProgress, [0.03, 0.08, 0.15, 0.2], [0, 1, 1, 0]);
+
   return (
     <div className="relative min-h-[800vh] bg-black">
-      {/* THE IMAGE LAYER (Scroll Sequence) */}
+
+      {/* IMAGE SEQUENCE LAYER */}
       <div className="fixed inset-0 z-0">
         {frames.map((src, i) => (
           <motion.img
@@ -43,19 +54,71 @@ const Overlay = () => {
         ))}
       </div>
 
-      {/* THE TEXT LAYER */}
+      {/* TEXT LAYER */}
       <div className="relative z-10 pointer-events-none">
-        {/* Section 1: Hero */}
+
+        {/* ✅ Section 1: CINEMATIC NAME REVEAL — center screen */}
         <motion.div
-          style={{ opacity: opacityA, y: yA }}
-          className="fixed inset-0 flex flex-col items-start justify-center px-12 md:px-24 text-left"
+          style={{ opacity: nameOpacity, y: yA }}
+          className="fixed inset-0 flex flex-col items-center justify-center text-center px-6"
         >
-          <h1 className="text-6xl md:text-8xl font-bold text-white drop-shadow-2xl">
-            Deepika Premjani
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mt-2 tracking-[0.2em] uppercase font-medium">
-            Interior Designer
-          </p>
+          {/* Name split reveal */}
+          <div className="overflow-hidden relative flex flex-col items-center">
+            {/* Top half of name slides down from above */}
+            <motion.div
+              style={{ y: topHalfY }}
+              className="text-6xl md:text-8xl font-bold text-white drop-shadow-2xl leading-none"
+            >
+              Deepika
+            </motion.div>
+            {/* Bottom half slides up from below */}
+            <motion.div
+              style={{ y: bottomHalfY }}
+              className="text-6xl md:text-8xl font-bold text-white drop-shadow-2xl leading-none"
+            >
+              Premjani
+            </motion.div>
+          </div>
+
+          {/* ✅ INTERIOR DESIGNER — shimmer glow after name */}
+          <motion.p
+            style={{ opacity: subtitleOpacity }}
+            className="mt-4 text-base md:text-2xl tracking-[0.35em] uppercase font-medium relative overflow-hidden"
+          >
+            {/* Base text */}
+            <span className="text-gray-400">Interior Designer</span>
+
+            {/* Shimmer overlay */}
+            <motion.span
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-60"
+              initial={{ x: '-100%' }}
+              animate={{ x: '200%' }}
+              transition={{
+                duration: 1.8,
+                delay: 0.5,
+                repeat: Infinity,
+                repeatDelay: 3,
+                ease: 'easeInOut',
+              }}
+              style={{ mixBlendMode: 'overlay' }}
+            />
+            {/* Glow text on top */}
+            <motion.span
+              className="absolute inset-0 text-base md:text-2xl tracking-[0.35em] uppercase font-medium text-white"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0.6, 1] }}
+              transition={{
+                duration: 2,
+                delay: 0.3,
+                ease: 'easeInOut',
+              }}
+              style={{
+                textShadow: '0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(198,164,126,0.5)',
+              }}
+            >
+              Interior Designer
+            </motion.span>
+          </motion.p>
         </motion.div>
 
         {/* Section 2: I Design */}
@@ -79,6 +142,7 @@ const Overlay = () => {
             <span className="text-gray-400 font-light italic">and engineering.</span>
           </h2>
         </motion.div>
+
       </div>
     </div>
   );
