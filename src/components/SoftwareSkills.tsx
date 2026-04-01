@@ -12,7 +12,7 @@ const skills = [
 
 export default function SoftwareSkills() {
   return (
-    <section className="relative z-20 bg-[#121212] py-32 px-6 md:px-12 text-white overflow-hidden">
+    <section className="relative z-20 bg-[#121212] py-16 md:py-32 px-4 md:px-12 text-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -20,9 +20,12 @@ export default function SoftwareSkills() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-20 tracking-tighter text-center">Software Proficiency</h2>
+          <h2 className="text-3xl md:text-5xl font-bold mb-10 md:mb-20 tracking-tighter text-center">
+            Software Proficiency
+          </h2>
         </motion.div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-10">
           {skills.map((skill, index) => (
             <motion.div
               key={skill.id}
@@ -34,23 +37,23 @@ export default function SoftwareSkills() {
               whileTap={{ scale: 0.97 }}
               className="group relative bg-[#1c1c1c] p-4 md:p-10 rounded-2xl md:rounded-3xl border border-white/5 hover:border-white/30 transition-all duration-500 flex flex-col items-center cursor-pointer"
             >
-              <div
-                className="mb-4 md:mb-8 bg-white rounded-xl md:rounded-2xl flex items-center justify-center p-3 md:p-4 shadow-lg"
-                style={{ width: '80px', height: '80px' }}
-              >
+              {/* ✅ White icon box — full width, square aspect ratio */}
+              <div className="mb-4 md:mb-8 w-full aspect-square bg-white rounded-xl md:rounded-2xl flex items-center justify-center p-4 md:p-6 shadow-lg">
                 <img
                   src={skill.image}
                   alt={skill.name}
                   className="w-full h-full object-contain"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-white/70 group-hover:text-white transition-colors duration-300">
+
+              <h3 className="text-base md:text-xl font-semibold text-white/70 group-hover:text-white transition-colors duration-300 text-center">
                 {skill.name}
               </h3>
+
               <motion.div
-                className="h-0.5 bg-[#c6a47e] mt-3 rounded-full"
+                className="h-0.5 bg-[#c6a47e] mt-2 md:mt-3 rounded-full"
                 initial={{ width: 0 }}
-                whileInView={{ width: '40px' }}
+                whileInView={{ width: '32px' }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.15 + 0.4 }}
               />
