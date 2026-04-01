@@ -6,18 +6,15 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 const Overlay = () => {
   const { scrollYProgress } = useScroll();
 
-  // 1. ANIMATION LOGIC (0 to 20 frames)
   const frameIndex = useTransform(scrollYProgress, [0, 0.45], [0, 20]);
 
   const frames = useMemo(() => {
     return Array.from({ length: 21 }, (_, i) => {
       const num = i.toString().padStart(2, '0');
-      // THE FIX: Looking directly in the root of your public folder
       return `/sequence/frame_${num}_delay-0.066s.png`;
     });
   }, []);
 
-  // 2. TEXT TIMING (Fixed Overlapping)
   const opacityA = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const yA = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
   const opacityB = useTransform(scrollYProgress, [0.3, 0.4, 0.5, 0.6], [0, 1, 1, 0]);
@@ -27,7 +24,8 @@ const Overlay = () => {
 
   return (
     <div className="relative min-h-[800vh] bg-black">
-      {/* THE IMAGE LAYER (Scroll Sequence) */}
+
+      {/* IMAGE LAYER */}
       <div className="fixed inset-0 z-0">
         {frames.map((src, i) => (
           <motion.img
@@ -43,19 +41,75 @@ const Overlay = () => {
         ))}
       </div>
 
-      {/* THE TEXT LAYER */}
+      {/* TEXT LAYER */}
       <div className="relative z-10 pointer-events-none">
-        {/* Section 1: Hero */}
+
+        {/* Section 1: Hero — cinematic split reveal */}
         <motion.div
           style={{ opacity: opacityA, y: yA }}
           className="fixed inset-0 flex flex-col items-start justify-center px-12 md:px-24 text-left"
         >
-          <h1 className="text-6xl md:text-8xl font-bold text-white drop-shadow-2xl">
-            Deepika Premjani
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mt-2 tracking-[0.2em] uppercase font-medium">
-            Interior Designer
-          </p>
+          {/* Name: split reveal — top slides down, bottom slides up */}
+          <div className="overflow-hidden flex flex-col items-start">
+            <motion.h1
+              className="text-6xl md:text-8xl font-bold text-white drop-shadow-2xl leading-tight whitespace-nowrap"
+              initial={{ y: -80, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              Deepika
+            </motion.h1>
+            <motion.h1
+              className="text-6xl md:text-8xl font-bold text-white drop-shadow-2xl leading-tight whitespace-nowrap"
+              initial={{ y: 80, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              Premjani
+            </motion.h1>
+          </div>
+
+          {/* Interior Designer: shimmer glow */}
+          <motion.div
+            className="relative mt-3 overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            {/* Base text */}
+            <p className="text-xl md:text-2xl text-gray-300 tracking-[0.2em] uppercase font-medium">
+              Interior Designer
+            </p>
+
+            {/* Shimmer sweep */}
+            <motion.span
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent"
+              style={{ mixBlendMode: 'overlay', opacity: 0.7 }}
+              initial={{ x: '-100%' }}
+              animate={{ x: '200%' }}
+              transition={{
+                duration: 1.5,
+                delay: 1.2,
+                repeat: Infinity,
+                repeatDelay: 4,
+                ease: 'easeInOut',
+              }}
+            />
+
+            {/* Glow copy on top */}
+            <motion.p
+              className="absolute inset-0 text-xl md:text-2xl tracking-[0.2em] uppercase font-medium text-white"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0.7, 1] }}
+              transition={{ duration: 1.5, delay: 1, ease: 'easeInOut' }}
+              style={{
+                textShadow:
+                  '0 0 20px rgba(255,255,255,0.9), 0 0 40px rgba(198,164,126,0.6)',
+              }}
+            >
+              Interior Designer
+            </motion.p>
+          </motion.div>
         </motion.div>
 
         {/* Section 2: I Design */}
@@ -79,8 +133,10 @@ const Overlay = () => {
             <span className="text-gray-400 font-light italic">and engineering.</span>
           </h2>
         </motion.div>
+
       </div>
     </div>
   );
 };
+
 export default Overlay;
