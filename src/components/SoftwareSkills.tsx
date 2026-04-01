@@ -37,7 +37,7 @@ export default function SoftwareSkills() {
               whileTap={{ scale: 0.97 }}
               className="group relative bg-[#1c1c1c] p-4 md:p-10 rounded-2xl md:rounded-3xl border border-white/5 hover:border-white/30 transition-all duration-500 flex flex-col items-center cursor-pointer"
             >
-              {/* ✅ White icon box — full width, square aspect ratio */}
+              {/* White icon box — full width, perfect square */}
               <div className="mb-4 md:mb-8 w-full aspect-square bg-white rounded-xl md:rounded-2xl flex items-center justify-center p-4 md:p-6 shadow-lg">
                 <img
                   src={skill.image}
